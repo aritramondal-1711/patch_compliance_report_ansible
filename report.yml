@@ -1,0 +1,70 @@
+---
+- name: PAtch Compliance Report Generator
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+      ignore_errors: yes
+
+    - name: Check Pending Patches
+      ansible.builtin.command:
+        cmd: "apt list --upgradable -a"
+      register: pending_patches
+      ignore_errors: yes
+
+    - name: Store Pending Count
+      ansible.builtin.set_fact:
+        pending_count: "{{ pending_patches.stdout_lines | length - 1 }}"
+
+    - name: Store Pending List
+      ansible.builtin.set_fact:
+        pending_list: "{{ pending_patches.stdout_lines }}"
+      
+    - name: Check Patches Updated in Current Month
+      ansible.builtin.shell:
+        cmd: 'cat  /var/log/dpkg.log | grep -i "$(date +%Y-%m)" | grep  " upgrade "'
+      register: updated_patches
+      ignore_errors: yes 
+
+    - name: Store Updated Count
+      ansible.builtin.set_fact:
+        updated_count: "{{ updated_patches.stdout_lines | length }}"
+      
+    - name: Store Update patch List
+      ansible.builtin.set_fact:
+        updated_list: "{{ updated_patches.stdout_lines }}"
+
+- name: Trigger mail
+  hosts: local
+  become: true
+
+  vars_files:
+    - cred.yml
+
+  tasks:
+  - name: Generare Applied Patch file
+    ansible.builtin.template:
+      src: applied_patches.txt.j2
+      dest: /tmp/applied_patches.txt
+
+  - name: Generate Pending Patches file
+    ansible.builtin.template:
+      src: pending_patches.txt.j2
+      dest: /tmp/pending_patches.txt
+  
+  - name: Mail Generate
+    ansible.builtin.mail:
+      host: "{{ relay }}"
+      port: "{{ mail_port }}"
+      username: "{{ mail_username }}"
+      password: "{{ password }}"
+      to: "{{ recipient_mail }}"
+      subject: "Patch Complian Report | {{ lookup('pipe', 'date +%d/%m/%Y-%H:%M:%S')  }}  "
+      subtype: html
+      body: "{{ lookup('ansible.builtin.template', 'mail.html.j2') }}"
+      attach:
+        - /tmp/applied_patches.txt
+        - /tmp/pending_patches.txt

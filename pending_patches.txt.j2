@@ -1,0 +1,10 @@
+{% for host in groups.all %}
+======================================== {{ host }} ========================================
+Patches Pending: {{ hostvars[host].pending_count }}
+{% for line in hostvars[host].pending_list %}
+{{ line }}
+{% endfor %}
+
+==========================================================================================================
+
+{% endfor %}

@@ -1,0 +1,11 @@
+
+{% for host in groups.all %}
+======================================== {{ host }} ========================================
+Patches Applied: {{ hostvars[host].updated_count }}
+{% for line in hostvars[host].updated_list %}
+{{ line }}
+{% endfor %}
+
+==========================================================================================================
+
+{% endfor %}

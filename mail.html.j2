@@ -1,0 +1,65 @@
+<html>
+<body>
+<head>
+    <style>
+        #table_head{
+            color: orange;
+        }
+        .table_data{
+            color: black;
+        }
+        .row{
+            padding: 2px;
+        }
+        #red{
+            color: red;
+        }
+        #green{
+            color: green;
+        }
+    </style>
+</head>
+<pre>    
+Hi Team,
+
+Kindly refer below compliance report and take appropriate action.
+Applied and pending Patches list is attched for reference.
+</pre>
+<table id="table" border=1>
+    <tr id="table_head">
+        <th class="row"><b>Hostname</b></th>
+        <th class="row"><b>Ip Address</b></th>
+        <th class="row"><b>Patch Pending</b></th>
+        <th class="row"><b>Patch Applied</b></th>
+        <th class="row"><b>Patch Compliance</b></th>
+    </tr>
+    {% for host in groups.all %}
+    <tr class="table_data">
+        <td class="row"> {{ host }} </td>
+        <td class="row"> {{ hostvars[host].ansible_facts.default_ipv4.address }}
+        <td class="row"> {{ hostvars[host].pending_count }} </td>
+        <td class="row"> {{ hostvars[host].updated_count }} </td>
+        {% set total=((hostvars[host].updated_count | int) + (hostvars[host].pending_count | int)) %}
+        {% if total > 0 %}
+            {% set comp=((hostvars[host].updated_count | int) / total * 100) %} 
+        {% else %}
+            {% set comp=100 %}
+        {% endif %}
+
+        {% if comp == 100 %}
+            <td class="row" id="green"> {{ comp | int }} % </td>
+        {% else %}
+            <td class="row" id="red"> {{ comp | int }} % </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<pre>
+Regards,
+------------------------------
+Admin Team
+</pre>
+</body>
+</html>
+
