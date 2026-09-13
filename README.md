@@ -118,8 +118,4 @@ This project automates **patch compliance reporting** across multiple Linux node
    ```
 5. Check your email for compliance report and attachments.  
 
----
-
-## 📜 License
-Exclusive to **Dabin Distro**. Internal use only.
 ```
