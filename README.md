@@ -2,7 +2,7 @@
 # Patch Compliance Report Using Ansible
 
 **Author:** Aritra Mondal  
-**Exclusive to:** Dabin Distro  
+**Exclusive to:** Dabian Distro  
 
 ---
 
