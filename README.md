@@ -28,15 +28,9 @@ This project automates **patch compliance reporting** across multiple Linux node
 ---
 
 ## 📂 File Structure
-```
-├── ansible.cfg
-├── applied_patches.txt.j2
-├── cred.yml
-├── inventory
-├── mail.html.j2
-├── pending_patches.txt.j2
-└── report.yml
-```
+
+<img width="457" height="186" alt="image" src="https://github.com/user-attachments/assets/d7bdbec9-df2d-4463-99b3-8dbaca434deb" />
+
 
 ---
 
@@ -65,53 +59,27 @@ This project automates **patch compliance reporting** across multiple Linux node
 ---
 
 ## 📊 Compliance Formula
-```
-Compliance = (Applied Patch Count) / (Applied + Pending Patch Count) * 100
-```
+
+<img width="388" height="87" alt="image" src="https://github.com/user-attachments/assets/8056f0d1-6cd2-4713-b27a-71896f60aee5" />
 
 ---
 
 ## 🧠 Example Outputs
 
 ### Pending Patches
-```
-================================ controller =================================
-Patches Pending: 3
-Listing...
-power-profiles-daemon/noble-updates 0.21-1ubuntu3 amd64 [upgradable from: 0.21-1ubuntu2]
 
-================================ node3 =================================
-Patches Pending: 17
-Listing...
-linux-aws/resolute-updates,resolute-security 7.0.0-1012.12 amd64 [upgradable from: 7.0.0-1006.6]
-...
-```
+<img width="1734" height="902" alt="image" src="https://github.com/user-attachments/assets/c6d4ac63-da83-4f29-847e-923affc86f0b" />
+
 
 ### Applied Patches
-```
-=============================== controller ===============================
-Patches Applied: 212
-2026-09-06 11:02:27 upgrade bsdutils:amd64 1:2.39.3-9ubuntu6.5 → 1:2.39.3-9ubuntu6.6
-2026-09-06 11:02:28 upgrade coreutils:amd64 9.4-3ubuntu6.2 → 9.4-3ubuntu6.3
-...
-```
+
+<img width="1734" height="902" alt="image" src="https://github.com/user-attachments/assets/a7bd2f4b-1e3f-4556-9d35-8ba491dec013" />
+
 
 ### Email Report
-```
-Patch Compliance Report | 13/09/2026-19:35:56
 
-| Hostname   | IP Address       | Patch Pending | Patch Applied | Patch Compliance |
-|------------|------------------|---------------|---------------|------------------|
-| controller | 192.168.29.95    | 3             | 212           | 98 %             |
-| node1      | 172.31.44.86     | 5             | 159           | 96 %             |
-| node2      | 172.31.38.222    | 0             | 159           | 100 %            |
-| node3      | 172.31.32.29     | 17            | 156           | 90 %             |
-| node4      | 172.31.44.168    | 0             | 159           | 100 %            |
+<img width="740" height="748" alt="image" src="https://github.com/user-attachments/assets/dc03a2d3-3257-4f21-a4ea-accf4491e07c" />
 
-Attachments: applied_patches.txt, pending_patches.txt
-```
-
----
 
 ## 🧩 Architecture Diagram
 ```text
