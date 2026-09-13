@@ -1,5 +1,4 @@
 
-```markdown
 # Patch Compliance Report Using Ansible
 
 **Author:** Aritra Mondal  
@@ -32,7 +31,6 @@ This project automates **patch compliance reporting** across multiple Linux node
 <img width="457" height="186" alt="image" src="https://github.com/user-attachments/assets/d7bdbec9-df2d-4463-99b3-8dbaca434deb" />
 
 
----
 
 ## 🔄 Workflow
 
